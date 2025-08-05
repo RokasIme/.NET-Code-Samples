@@ -1,6 +1,4 @@
-﻿
-
-namespace ShopApplication
+﻿namespace ShopApplication.Models
 {
     internal class Customer
     {
