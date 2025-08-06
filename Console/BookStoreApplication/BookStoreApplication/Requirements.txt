@@ -12,7 +12,7 @@ Add:
 	"Please enter the Description":
 	<Description>
 	"Please enter the Amount":
-	<Amound>
+	<Amount>
 
 List: 
 It should output all the info about books.
