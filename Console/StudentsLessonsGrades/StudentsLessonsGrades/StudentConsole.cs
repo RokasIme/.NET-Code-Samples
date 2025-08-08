@@ -26,6 +26,7 @@ namespace StudentsLessonsGrades
             Student student = new Student();
             student.Name = name;
             student.Surname = surname;
+            student.Grades = new Grade();
             students.Add(student);
         }
 

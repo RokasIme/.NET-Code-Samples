@@ -5,7 +5,7 @@ namespace StudentsLessonsGrades.Model
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public Grade Grades { get; set; }
+        public Grade Grades { get; set; } 
 
     }
 }

@@ -5,5 +5,11 @@ namespace StudentsLessonsGrades.Model
     {
         public List<int>? Math { get; set; }
         public List<int>? Biology { get; set; }
+
+        public Grade()
+        {
+            Math = new List<int>();
+            Biology = new List<int>();
+        }
     }
 }
