@@ -26,8 +26,25 @@ namespace FirstMvcApplication.Controllers
             {
                 Name = "Rokas Imelinskas"
             };
-          
+
             return View(personModel);
+        }
+
+        // Display page with the form
+        public IActionResult DisplaySubmitData()
+        {
+            var emptyModel = new PersonModel()
+            {
+                Name = "Fill me"
+            };
+            return View(emptyModel);
+        }
+
+        //will receive filled model and will save to file
+        public IActionResult SendSubmitData(PersonModel model)
+        {
+            System.IO.File.WriteAllText("test.txt", model.Name);
+            return RedirectToAction("DisplaySubmitData");
         }
         public IActionResult Privacy()
         {
