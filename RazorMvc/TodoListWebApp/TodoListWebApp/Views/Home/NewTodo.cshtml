@@ -1,1 +1,20 @@
-﻿<h2> Create new Todo </h2>   
+﻿@model TodoModel
+
+@{
+    ViewData["Title"] = "Create New Todo";
+}
+
+@using (Html.BeginForm("CreateTodo", "Home", FormMethod.Post))
+{
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        @Html.TextBoxFor(m => m.Todo, new { @class = "form-control", placeholder = "Enter todo title" })
+        @Html.ValidationMessageFor(m => m.Todo, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter todo description", rows = 3 })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create Todo</button>
+}

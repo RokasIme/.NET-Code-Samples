@@ -1,6 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using TodoListWebApp.Models;
+using TodoListWebApp.Services;
 
 namespace TodoListWebApp.Controllers
 {
@@ -8,10 +9,12 @@ namespace TodoListWebApp.Controllers
     {
       
         private readonly ILogger<HomeController> _logger;
+        private readonly DataService _dataService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DataService dataService)
         {
             _logger = logger;
+            _dataService = dataService;
         }
 
         public IActionResult Index()
@@ -21,13 +24,42 @@ namespace TodoListWebApp.Controllers
 
         public IActionResult ListTodo()
         {
+            var todos = _dataService.GetAllTodos();
+
+            var todosList = new ListTodoModel()
+            {
+                Todos = todos
+            };
             
-            return View();
+            return View(todosList);
         }
         
         public IActionResult NewTodo()
         {
-            return View();
+            var emptyTodoModel = new TodoModel()
+            {
+                Todo = "Enter Todo",
+                Description = "Enter Description"
+            };
+
+            return View(emptyTodoModel);
+        }
+
+        public IActionResult CreateTodo(TodoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dataService.AddTodo(model);
+                    return RedirectToAction("ListTodo");
+                }
+                catch (ArgumentException ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+            return View("NewTodo", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

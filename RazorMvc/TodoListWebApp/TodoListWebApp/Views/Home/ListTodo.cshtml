@@ -1,1 +1,10 @@
-﻿<h2> Todo List </h2>   
+﻿@model ListTodoModel
+
+
+<h2> Todo List </h2>
+<ul>
+    @foreach (var todo in Model.Todos)
+    {
+        <li>@todo.Todo, @todo.Description</li>
+    }
+</ul>
