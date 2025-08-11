@@ -6,6 +6,7 @@ namespace TodoListWebApp.Controllers
 {
     public class HomeController : Controller
     {
+      
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -15,10 +16,16 @@ namespace TodoListWebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("ListTodo", "Home");
         }
 
-        public IActionResult Privacy()
+        public IActionResult ListTodo()
+        {
+            
+            return View();
+        }
+        
+        public IActionResult NewTodo()
         {
             return View();
         }
