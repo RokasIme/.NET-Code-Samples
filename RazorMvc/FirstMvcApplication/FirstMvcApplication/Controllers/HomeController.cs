@@ -1,17 +1,20 @@
+using FirstMvcApplication.Models;
+using FirstMvcApplication.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
-using FirstMvcApplication.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FirstMvcApplication.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DataService _dataService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DataService dataService)
         {
             _logger = logger;
+            _dataService = dataService;
         }
 
         public IActionResult Index()
@@ -35,7 +38,7 @@ namespace FirstMvcApplication.Controllers
         {
             var emptyModel = new PersonModel()
             {
-                Name = "Fill me"
+                Name = "Enter your name"
             };
             return View(emptyModel);
         }
@@ -43,8 +46,20 @@ namespace FirstMvcApplication.Controllers
         //will receive filled model and will save to file
         public IActionResult SendSubmitData(PersonModel model)
         {
-            System.IO.File.WriteAllText("test.txt", model.Name);
+            //System.IO.File.WriteAllText("test.txt", model.Name);    áraðo duomenis á failà
+            _dataService.Add(model);
             return RedirectToAction("DisplaySubmitData");
+        }
+
+        public IActionResult NamesList()         {
+            // Get all persons from the data service
+            var persons = _dataService.GetAll();
+
+            var personList = new NamesListModel()
+            {
+                Persons = persons
+            };
+            return View(personList);
         }
         public IActionResult Privacy()
         {
